@@ -3,17 +3,17 @@ import { Schema, Types, model } from "mongoose";
 
 
 const pinSchema = new Schema({
-    title: {type: String, required:true},
+    title: {type: String, required: true},
 
     description: {type: String, required:true},
 
     image: {type: String, required: true},
 
-    price: {type: String, required: true},
+    //price: {type: String, required: true},
 
     category: {type: String, required: true},
     
-    user: {type: Types.ObjectId, required: true, ref: 'User'}
+     //user: {type: String, required: true, ref: 'User'}
 },{
     timestamps: true
 });

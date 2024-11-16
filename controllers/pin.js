@@ -17,7 +17,7 @@ export const addPin = async (req, res, next) => {
         //respond to request
         await PinModel.create({
             ...value,
-            user: req.auth.id
+            user: req.params.id
         });
         res.status(201).json('Pin was created')
     } catch (error) {
@@ -28,46 +28,50 @@ export const addPin = async (req, res, next) => {
 export const getPins = async (req, res, next) => {
     try {
         //getting query parameters for search filters
-        const { title, category, price, limit = 0, skip = 0 } = req.query;
-
-        //build a filter object based on the query parameters
-        let filter = {};
-        if (title) {
-            //regex for case-insensitive title search
-            filter.title = { $regex: title, $options: "i" };
-        }
-
-        if (category) {
-            filter.category = category;
-        }
-
-        if (price) {
-            filter.price = price;
-        }
+        const { filter = "{}", sort = "{}", limit = 10, skip = 0 } = req.query;
 
         //fetch pins from the database with the filter
+        
         const pins = await PinModel
-            .find(filter)
+            .find(JSON.parse(filter))
+            .sort(JSON.parse(sort))
             .limit(limit)
             .skip(skip);
+        
+            res.status(201).json(pins)
+        } catch (error) {
+            next(error);
+    
+        }
+    };
+
+        // if (title) {
+        //     //regex for case-insensitive title search
+        //     filter.title = { $regex: title, $options: "i" };
+        // }
+
+        // if (category) {
+        //     filter.category = category;
+        // }
+
+        // if (price) {
+        //     filter.price = price;
+        // }
 
         //return response
-        res.status(201).json('Pin was created')
-    } catch (error) {
-        next(error);
-
-    }
-};
+       
 
 export const getOnePin = async (req, res, next) => {
     try {
-        const userCon = await PinModel.findById(req.params.id);
-        if (!userCon) {
-            return res.status(404).json({
-                message: "Pin not found"
-            });
-        }
-        res.status(201).json('Pin was created')
+        const{id}=req.params;
+        //get pin by id from database
+        const pin = await PinModel.findById(id);
+        // if (!pin) {
+        //     return res.status(404).json({
+        //         message: "Pin not found"
+        //     });
+        // }
+        res.json(pin);
     } catch (error) {
         next(error);
     }
@@ -83,7 +87,7 @@ export const updatePin = async (req, res, next) => {
         //write updated pins to the database
         const updatePin = await PinModel.findOneAndUpdate({
             _id: req.params.id,
-            user: req.auth.id
+            user: req.id
         },
             value,
             { new: true }
@@ -95,7 +99,7 @@ export const updatePin = async (req, res, next) => {
             });
         }
         //respond to request
-        res.status(201).json('Pin was created')
+        res.status(201).json('Pin was updated')
     } catch (error) {
         next(error);
 
@@ -108,7 +112,7 @@ export const deletePin = async (req, res, next) => {
 
             {
                 _id: req.params.id,
-                user: req.auth.id
+                user: req.id
             },
         );
         if (!deletedPin) {

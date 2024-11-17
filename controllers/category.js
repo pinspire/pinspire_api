@@ -3,7 +3,8 @@ import { addCategoryValidator } from "../validators/category.js";
 export const addCategories = async (req,res,next)=>{
     try {
         //validate category input
-        const{error,value} = addCategoryValidator.validate(req.body);
+        const{error,value} = addCategoryValidator.validate({
+            ...req.body});
         if(error){
             return res.status(422).json(error);
         }

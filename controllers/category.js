@@ -32,8 +32,15 @@ export const getOneCategory = async (req,res,next)=>{
 
 export const getAllCategories = async (req,res,next)=>{
     try {
-        //write input to the database
-        const categories = await CategoryModel.find();
+        const{filter = "{}", sort = "{}", limit= 0, skip = 0} =req.query;
+        
+        //fetch input from the database
+        const categories = await CategoryModel
+        .find(JSON.parse(filter))
+        .sort(JSON.parse(sort))
+        .limit(limit)
+        .skip(skip);
+
 
         //return response
         res.status(200).json(categories);

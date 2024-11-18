@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import userRouter from "./routes/users.js";
 import pinRouter from "./routes/pin.js";
+import categoryRouter from "./routes/category.js";
 
 //connect to the database
 await mongoose.connect(process.env.MONGO_URI);
@@ -18,9 +19,10 @@ app.use(cors());
 
 app.use(userRouter);
 app.use(pinRouter);
+app.use(categoryRouter);
 
 //listening for incoming requests
 
-app.listen(3700,()=>{
+app.listen(3700, () => {
     console.log("App is listening on port 3700");
 });

@@ -28,7 +28,7 @@ export const addPin = async (req, res, next) => {
 export const getPins = async (req, res, next) => {
     try {
         //getting query parameters for search filters
-        const { filter = "{}", sort = "{}", limit = 10, skip = 0 } = req.query;
+        const { filter = "{}", sort = "{}", limit = 0, skip = 0 } = req.query;
 
         //fetch pins from the database with the filter
         

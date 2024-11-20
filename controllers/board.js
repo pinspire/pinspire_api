@@ -10,7 +10,8 @@ export const addBoards = async (req,res,next)=> {
         }
         // write input into database
         await BoardModel.create(value);
-        res.status.json('Board has been added')
+
+        res.status(201).json('Board has been added')
     } catch (error) {
         next(error);
         
@@ -41,7 +42,7 @@ export const getAllBoards = async (req,res,next)=>{
         .limit(limit)
         .skip(skip);
 
-        res.status.json('boards')
+        res.status(201).json('boards')
     } catch (error) {
         next(error);
         

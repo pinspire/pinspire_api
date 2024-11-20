@@ -1,7 +1,7 @@
 import { BoardModel } from "../models/board.js";
 import { addBoardValidator} from "../validators/board.js";
 
-export const addBoardValidator = async (req,res,next)=> {
+export const addBoards = async (req,res,next)=> {
     try {
         //validate the input
         const{error,value} = addBoardValidator.validate(req.body);

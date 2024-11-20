@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 
 const boardSchema = new Schema ({
     name: {type: String, required: true},
-    description:{type:String, required: true}
+    // description:{type:String, required: true}
 },{
     timestamps: true
 });

@@ -25,7 +25,7 @@ export const getOneBoard = async (req,res,next)=>{
                 return res.status(422).json('Board not found')
         }
         
-        res.status(201).json('board')
+        res.status(201).json(board)
     } catch (error) {
         next(error);
         

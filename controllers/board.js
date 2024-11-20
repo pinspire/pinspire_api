@@ -36,13 +36,13 @@ export const getAllBoards = async (req,res,next)=>{
     try {
         const { filter="{}", sort="{}", limit=0, skip=0} = req.query;
 
-        const board = await BoardModel
+        const boards = await BoardModel
         .find(JSON.parse(filter))
         .sort(JSON.parse(sort))
         .limit(limit)
         .skip(skip);
 
-        res.status(201).json('boards')
+        res.status(200).json(boards);
     } catch (error) {
         next(error);
         
